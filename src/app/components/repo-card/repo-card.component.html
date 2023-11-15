@@ -1,0 +1,11 @@
+<div *ngIf="card" class="flex h-full justify-between flex-col max-w-lg p-6 bg-white border border-gray-200 rounded-lg shadow overflow-hidden">
+    <div>
+      <a href="#" class="text-2xl font-bold tracking-tight text-gray-900 hover:underline break-wordse">{{ card.name }}</a>
+      <div class="text-gray-700 overflow-ellipsis break-words">{{ card.description }}</div>
+    </div>
+    <div *ngIf="repoLanguages[card.name]">
+      <span *ngFor="let lang of repoLanguages[card.name]">
+        <a href="#" class="inline-flex m-1 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">{{lang}}</a>
+      </span>
+    </div>
+  </div>

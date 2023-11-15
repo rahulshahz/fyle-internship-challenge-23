@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ApiService } from './services/api.service';
-
+import { forkJoin, interval, of } from 'rxjs';
+import { concatMap, take } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  landing:boolean=true;
   username = '';
   user: any;
   repos: any[] = [];
@@ -17,7 +19,8 @@ export class AppComponent {
   constructor(
     private apiService: ApiService
   ) {}
-  search() {
+  search():void {
+this.landing=false;
     this.loading = true;
     this.page=1
     this.perPage=10
@@ -34,6 +37,7 @@ export class AppComponent {
   fetchRepositories() {
     this.apiService.getUserRepos(this.username, this.page, this.perPage)
       .subscribe(repos => {
+        
         this.repos = repos;
         this.loading = false;
         this.fetchRepoLanguages();
@@ -57,6 +61,7 @@ export class AppComponent {
   changePerPage(newPerPage: number) {
     this.perPage = newPerPage;
     this.page = 1; // Reset page to 1 when changing repositories per page
+    console.log(this.perPage);
     this.fetchRepositories();
   }
   totalPages(): number[] {
